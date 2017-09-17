@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/com/emay=UTF-8
+encoding//src/com/emay/controller/ArcgisMapService.java=GBk
+encoding//src/com/emay/controller/MapService.java=GBk
+encoding//src/com/emay/dao/BasicDao.java=UTF-8
+encoding//src/com/emay/utils/CopyTile.java=GB2312
+encoding//src/com/emay/utils/DownloadUtil.java=GB2312
+encoding//src/com/emay/utils/UnicodeConverter.java=GB2312
+encoding//src/config.properties=GBk
