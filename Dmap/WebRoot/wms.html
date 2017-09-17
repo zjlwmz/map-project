@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="js/libs/jquery-1.8.3_min.js"></script>
+    <script src="http://dev.openlayers.org/OpenLayers.js"></script>
+    <!-- 
+    <script src="http://localhost:8080/OpenLayers-2.11/OpenLayers-2.11/OpenLayers.js"></script>
+     -->
+    <script type="text/javascript" src="./layer/GoogleTile.js"></script>
+    <script type="text/javascript" src="./layer/BaiduTile.js"></script>
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <title>地图wms展示</title>
+</head>
+<body>
+    <div id="allmap"></div>
+</body>
+<script>
+    $(document).ready(function(){
+        var dMap=new OpenLayers.Map('allmap', {
+            numZoomLevels: 5,
+            maxResolution:2.388657133579254,
+            maxExtent: new OpenLayers.Bounds(11820904.8985, 3430897.2586, 11823274.4464, 3433118.7097),
+            displayProjection: new OpenLayers.Projection("EPSG:4326"),
+            controls: [
+                 new OpenLayers.Control.PanZoom(),
+                 new OpenLayers.Control.Navigation({
+                 dragPanOptions: {
+                 enableKinetic: true
+                 }
+                 }),
+                new OpenLayers.Control.LayerSwitcher(),
+                new OpenLayers.Control.MousePosition(),
+                new OpenLayers.Control.TouchNavigation({
+                    dragPanOptions: {
+                        enableKinetic: true
+                    }
+                })
+            ]
+        });
+        var agsTileOrigin = new OpenLayers.LonLat(-20037508.342787, 20037508.342787);
+        var baseLayer = new OpenLayers.Layer.GoogleTile('google map', "", {
+            tileOrigin: agsTileOrigin,
+            //numZoomLevels: 8,
+            //resolutions: resolutions,
+            // maxResolution:0.0007907421875,
+            sphericalMercator: true,
+            isBaseLayer: true,
+			transitionEffect: "resize",
+            type: 'png'
+            //projection: proj
+        });
+        var baidulayer = new OpenLayers.Layer.BaiduTile('baidu map', "", {
+            sphericalMercator: true,
+            isBaseLayer: false,
+            type: 'png'
+        });
+		
+		
+
+        var format = 'image/png';
+        // setup tiled layer
+       var tiled = new OpenLayers.Layer.WMS(
+                "cite:persion_layer_linestring - Tiled", "http://localhost:8787/geoserver/cite/wms",
+                {
+                   // LAYERS: 'cite:persion_layer_linestring',
+                    LAYERS:'cite:gps_persion_linestring_gcj,cite:persion_layer_point',
+                    STYLES: '',
+                    format: format,
+                    TRANSPARENT:true,
+                    tiled: true,
+                    sphericalMercator: true,
+                    tilesOrigin : dMap.maxExtent.left + ',' + dMap.maxExtent.bottom
+                },
+                {
+                    buffer: 0,
+                    displayOutsideMaxExtent: true,
+                    isBaseLayer: false,
+                    yx : {'EPSG:3752' : false}
+                    //yx : {'EPSG:3395' : false}
+                    //yx : {'EPSG:4326' : true}
+                }
+        );
+
+		var tiled2 = new OpenLayers.Layer.WMS(
+                "persion_layer_linestring_gcj", "http://localhost:8787/geoserver/cite/wms",
+                {
+                   // LAYERS: 'cite:persion_layer_linestring',
+                    LAYERS:'cite:persion_layer_linestring_gcj',
+                    STYLES: '',
+                    format: format,
+                    TRANSPARENT:true,
+                    tiled: true,
+                    sphericalMercator: true,
+                    tilesOrigin : dMap.maxExtent.left + ',' + dMap.maxExtent.bottom
+                },
+                {
+                    buffer: 0,
+                    displayOutsideMaxExtent: true,
+                    isBaseLayer: false,
+                    yx : {'EPSG:3752' : false}
+                    //yx : {'EPSG:3395' : false}
+                    //yx : {'EPSG:4326' : true}
+                }
+        );
+		
+		
+        // setup single tiled layer
+       var untiled = new OpenLayers.Layer.WMS(
+                "cite:persion_layer_linestring - Untiled", "http://localhost:8787/geoserver/cite/wms",
+                {
+                    LAYERS: 'cite:gps_persion_linestring_gcj,cite:persion_layer_point',
+                    STYLES: '',
+                    TRANSPARENT:true,
+                    format: format
+                },
+                {
+                    singleTile: true,
+                    ratio: 1,
+                    isBaseLayer: false
+                   // yx : {'EPSG:4326' : true}
+                }
+        );
+
+        //map.addLayers([untiled, tiled]);
+		//baidulayer
+        dMap.addLayers([tiled,tiled2,baseLayer]);
+        //dMap.setCenter(new OpenLayers.LonLat(11821029.09193,3432000.3219978), 15);  //添加平移缩放工具条
+        var mercator=lonlat2mercator({x:65,y:19});
+        var ll = new OpenLayers.LonLat(mercator.x, mercator.y);
+        dMap.setCenter(ll, 5);  //添加平移缩放工具条
+        //dMap.setCenter(new OpenLayers.LonLat(65,19), 15);  //添加平移缩放工具条
+    });
+
+    //经纬度转墨卡托
+    function lonlat2mercator(lonlat){
+        var  mercator={x:0,y:0};
+        var x = lonlat.x *20037508.34/180;
+        var y = Math.log(Math.tan((90+lonlat.y)*Math.PI/360))/(Math.PI/180);
+        y = y *20037508.34/180;
+        mercator.x = x;
+        mercator.y = y;
+        return mercator ;
+    }
+</script>
+</html>

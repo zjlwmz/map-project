@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gpsTest.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="jquery-1.8.3_min.js"></script>
+    <script type="text/javascript" src="GPS.js"></script>
+  </head>
+  
+  <body>
+    
+    <div>
+    	<input type="text" name="lat"/>
+    	<input type="text" name="lon"/>
+    	<input type="button" class="ok" value="转换"/>
+    </div>
+    <div>
+    	<textarea style="width:100px;height: 300px;"></textarea>
+    </div>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$(".ok").click(function(){
+    			var lat=$("[name='lat']").val();
+    			var lon=$("[name='lon']").val();
+    			var gcjs=[];
+    			$.ajax({
+    				type:"POST",
+    				url:"/SpaceService/persion/layer/gpsPont.nut",
+    				data:{},
+    				dataType:"json",
+    				success:function(data){
+    					$(data).each(function(index,obj){
+    						var x=obj.x;
+    						var y=obj.y;
+    						var lonlat=GPS.gcj_encrypt(y, x);
+    						gcjs.push(lonlat.lon+","+lonlat.lat);
+    					});
+    					$.ajax({
+    						type:"POST",
+		    				url:"/SpaceService/persion/layer/gpsToGcjSave.nut",
+		    				data:{gcjstr:gcjs.join(";")},
+		    				dataType:"json",
+		    				success:function(){
+		    					alert("OK");
+		    				}
+    					});
+    				}
+    			});
+    		});
+    	});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+package com.emay.utils;
+
+import java.util.Date;
+import java.util.List;
+
+import org.nutz.ioc.loader.annotation.IocBean;
+
+import com.emay.model.Case;
+
+
+/**
+ * xml工具类
+ * @author Administrator
+ *
+ */
+@IocBean
+public class XmlUtil {
+	/**
+	 * 案件xml拼串
+	 */
+	public String xmlpj(List<Case> list){
+		StringBuffer strbuff=new StringBuffer();
+		strbuff.append("<PRPLFLCLAIMINFOINFO><PRPLFLCLAIMINFOLIST>");
+		for(int i=0;i<list.size();i++){
+			Case tcase=list.get(i);
+			strbuff.append("<PRPLFLCLAIMINFO>");
+				strbuff.append("<REGISTNO>"+tcase.getBah()+"</REGISTNO>");
+				strbuff.append("<DAMAGEADDRESS>"+tcase.getBadd()+"</DAMAGEADDRESS>");
+				strbuff.append("<LICENSENO>"+tcase.getCph()+"</LICENSENO>");
+				strbuff.append("<LINKERNAME>"+tcase.getLxr()+"</LINKERNAME>");
+				strbuff.append("<LINKERMOBILE>"+tcase.getLxdh()+"</LINKERMOBILE>");
+				Date cxrq=tcase.getCxrq();
+				if(cxrq!=null){
+					strbuff.append("<DAMAGEDATE>"+DateUtils.sdf1.format(cxrq)+"</DAMAGEDATE>");
+				}else{
+					strbuff.append("<DAMAGEDATE>"+"</DAMAGEDATE>");
+				}
+				Date cxsj=tcase.getCxsj();
+				if(cxsj!=null){
+					strbuff.append("<DAMAGEHOUR>"+DateUtils.sdf8.format(cxsj)+"</DAMAGEHOUR>");
+				}else{
+					strbuff.append("<DAMAGEHOUR>"+"</DAMAGEHOUR>");
+				}
+				Date barq=tcase.getBarq();
+				if(barq!=null){
+					strbuff.append("<REPORTDATE>"+DateUtils.sdf1.format(barq)+"</REPORTDATE>");
+				}else{
+					strbuff.append("<REPORTDATE>"+"</REPORTDATE>");
+				}
+				Date basj= tcase.getBasj();
+				if(basj!=null){
+					strbuff.append("<REPORTHOUR>"+DateUtils.sdf8.format(basj)+"</REPORTHOUR>");
+				}else{
+					strbuff.append("<REPORTHOUR>"+"</REPORTHOUR>");
+				}
+				
+				strbuff.append("<LATITUDE>"+tcase.getLat()+"</LATITUDE>");
+				strbuff.append("<LONGITUDE>"+tcase.getLon()+"</LONGITUDE>");
+				strbuff.append("<BRANDCODE>"+tcase.getPpdm()+"</BRANDCODE>");
+				strbuff.append("<SENDFLAG>"+tcase.getSfsx()+"</SENDFLAG>");
+				strbuff.append("<SURVEYFLAG>"+tcase.getSfdd()+"</SURVEYFLAG>");
+				strbuff.append("<AGENTCODE>"+tcase.getSx4sd()+"</AGENTCODE>");
+				strbuff.append("<SURVEYORCODE>"+tcase.getCkydm()+"</SURVEYORCODE>");
+				strbuff.append("<SURVEYORNAME>"+tcase.getCkymc()+"</SURVEYORNAME>");
+				strbuff.append("<CUSTOMLEVEL>"+tcase.getKhjb()+"</CUSTOMLEVEL>");
+				strbuff.append("<COMPLETEFLAG>"+tcase.getCksfjs()+"</COMPLETEFLAG>");
+			strbuff.append("</PRPLFLCLAIMINFO>");
+		}
+		strbuff.append("</PRPLFLCLAIMINFOLIST></PRPLFLCLAIMINFOINFO>");
+		return strbuff.toString();
+	}
+}

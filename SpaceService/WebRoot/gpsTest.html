@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>gpsTest.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="GPS.js"></script>
+    
+    </head>
+  
+  <body>
+ 	<textarea id="point" style="width: 100%;height: 100px;">
+ 	
+ 	</textarea>
+    <script type="text/javascript">
+    	//alert(GPS.transformLat(39.933676862706776, 116.35608315379092));
+    	//document.write(GPS.transformLat(39.933676862706776, 116.35608315379092));
+    	
+    	$(document).ready(function(){
+    		var bdlat=39.933676862706776;var bdlon=116.35608315379092;
+    		var gcjo2=GPS.bd_decrypt(bdlat,bdlon);
+    		var wgs=GPS.gcj_decrypt(gcjo2.lat,gcjo2.lon);
+    		$("#point").text(wgs.lon+","+wgs.lat);
+    	});
+    </script>
+    
+  </body>
+</html>

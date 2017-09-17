@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Filtering marker cluster groups</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+<script type="text/javascript" src="../js/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/mapbox-map.js?t=1.01"></script>
+<style>
+  	body { margin:0; padding:0; }
+  	#map { position:absolute; top:0; bottom:0; width:100%; }
+	#colors {
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    background: #fff;
+	    width: 150px;
+	    padding:5px;
+	}
+</style>
+</head>
+<body>
+
+
+<div id='map'></div>
+<form id='colors'>
+  <div><input type='checkbox' name='filters' onclick='showStations();' value='red' checked> red</div>
+  <div><input type='checkbox' name='filters' onclick='showStations();' value='green' checked> green</div>
+  <div><input type='checkbox' name='filters' onclick='showStations();' value='orange' checked> orange</div>
+  <div><input type='checkbox' name='filters' onclick='showStations();' value='yellow' checked> yellow</div>
+  <div><input type='checkbox' name='filters' onclick='showStations();' value='blue' checked> blue</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>TianDi Map</title>
+    
+    <script type="text/javascript">
+        dojoConfig = {
+            parseOnLoad: true,
+            paths: {
+            	"jquery": "/Dmap/js/libs/jquery-1.8.3.min",
+            },
+            packages: [{
+                name: 'tdlib',
+                location: "/Dmap/js/tdlib"
+            }]
+        };
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/arcgis_js_api/library/3.9/3.9/js/dojo/dijit/themes/tundra/tundra.css"/>
+    <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css" />
+    <script type="text/javascript" src="http://127.0.0.1:8080/arcgis_js_api/library/3.9/3.9/init.js"></script>
+    
+
+    <script type="text/javascript">
+    var map;
+    require(["esri/map", "tdlib/GoogleLayer","esri/geometry/Point","dijit/form/Button","dojo/domReady!"], 
+    function(Map,GoogleLayer,Point,Button) {
+        map=new Map("mapDiv",{ logo:false});
+        var basemap = new GoogleLayer();
+        map.addLayer(basemap);
+        
+        map.centerAndZoom(new Point({"x": 120.200018, "y": 30.209999, "spatialReference": {"wkid": 4326 } }),14);
+        
+        var button = new Button({
+            label: "北京",
+            onClick: function(){
+                map.centerAt(new esri.geometry.Point(116.3,39.9, new esri.SpatialReference({ wkid: 4326 })));
+                }}
+            , "ToBeijing");
+      
+      });
+    </script>
+  </head>
+  <body class="tundra">
+    <button id="ToBeijing" type="button" ></button><br />
+    <div id="mapDiv" style="width:100%; height:550px; border:1px solid #000;"></div>
+  </body>
+</html>

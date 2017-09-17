@@ -1,0 +1,60 @@
+package com.emay.utils;
+
+import java.text.SimpleDateFormat;
+
+
+/**
+ * 时间操作类
+ * @author Administrator
+ *
+ */
+public class DateUtils {
+	/**
+	 * 
+	 * format yyyy-MM-dd
+	 */
+	public static SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd");
+	/**
+	 * 
+	 * format yyyy-MM-dd HH:mm:ss
+	 */
+	public  static SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	/**
+	 * 
+	 * format yyyy/MM/dd
+	 */
+	public static SimpleDateFormat sdf3=new SimpleDateFormat("yyyy/MM/dd");
+	/**
+	 * 
+	 * format yyyyMMddHHmmss
+	 */
+	public static SimpleDateFormat sdf4=new SimpleDateFormat("yyyyMMddHHmmss");
+	/**
+	 * 
+	 * format yyyyMMdd
+	 */
+	public static SimpleDateFormat sdf5=new SimpleDateFormat("yyyyMMdd");
+	
+	
+	/**
+	 * 
+	 * format yyyy-MM-dd
+	 */
+	public static SimpleDateFormat sdf6=new SimpleDateFormat("yyyy-MM-dd");
+	
+	
+	
+	/**
+	 * 
+	 * format HH:mm
+	 */
+	public static SimpleDateFormat sdf7=new SimpleDateFormat("HH:mm");
+	
+	/**
+	 * 
+	 * format HH:mm:ss
+	 */
+	public static SimpleDateFormat sdf8=new SimpleDateFormat("HH:mm:ss");
+	
+
+}

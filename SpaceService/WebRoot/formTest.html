@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>formTest.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="jquery-1.8.3_min.js"></script>
+
+  </head>
+  
+  <body>
+    <form id="form">
+    	
+    
+    </form>
+  </body>
+  <script type="text/javascript">
+  
+  	$(document).ready(function(){
+  		$.ajax({
+  			url:"http://localhost:8080/sfa/a/cm/form/formBase",
+  			type:"POST",
+  			data:{},
+  			dataType:"json",
+  			success:function(data){
+  				var formFiled=data.formFiled;
+  				$(formFiled).each(function(index,obj){
+  					var filedName=obj.filedName;
+  					var filedType=obj.filedType;
+  					var filedTitle=obj.filedTitle;
+  					var form_con=$("<div>"+
+  						"<label>"+filedTitle+"<label>"+
+  						"<input type=\"text\" name=\""+filedName+"\"/>"+
+  					"</div>");
+  					$("#form").append(form_con);
+  				});
+  			}
+  		});
+  	});
+  </script>
+</html>
